@@ -17,7 +17,7 @@ export const CLI_MISSING_MESSAGE =
 	"(pip install -e . from a clone of the repo).";
 
 export async function checkCliAvailable(exec: PiExec): Promise<boolean> {
-	const result = await exec("mellea-skills", ["--version"]);
+	const result = await exec("mellea-skills", ["version"]);
 	return result.code === 0;
 }
 
