@@ -5,6 +5,9 @@
   "keywords": ["pi-package", "mellea", "skills", "compiler"],
   "license": "Apache-2.0",
   "type": "module",
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
   },
