@@ -7,12 +7,12 @@ from inside a [pi](https://pi.dev) session.
 
 This extension shells out to the `mellea-skills` CLI — it does not bundle or
 install it. Before using `/compile` or `/certify`, install the compiler
-following the [main README's Install section](../README.md#install)
+following the [main README's Install section](../README.md#installation)
 (`pip install -e .` from a clone of this repo), and confirm `mellea-skills`
 resolves on your `PATH`:
 
 ```bash
-mellea-skills --version
+mellea-skills version
 ```
 
 Claude Code and an inference engine (Ollama or vLLM) are also required by the
