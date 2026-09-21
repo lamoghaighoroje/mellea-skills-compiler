@@ -64,4 +64,70 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			}
 		},
 	});
+
+	pi.registerCommand("validate", {
+		description: "Validate a compiled Mellea skill (lints + fixture smoke-check)",
+		handler: async (args: string, ctx: ExtensionCommandContext) => {
+			const available = await checkCliAvailable(pi.exec);
+			if (!available) {
+				ctx.ui.notify(CLI_MISSING_MESSAGE, "error");
+				return;
+			}
+
+			const trimmed = args.trim();
+			if (!trimmed) {
+				ctx.ui.notify(
+					"Usage: /validate <compiled-skill-dir> [--no-run] [--all]",
+					"warning",
+				);
+				return;
+			}
+
+			const argv = trimmed.split(/\s+/);
+			ctx.ui.setStatus("mellea-skills", "Validating...");
+			try {
+				const result = await runMelleaSkills(pi.exec, "validate", argv);
+				if (result.code === 0) {
+					ctx.ui.notify(result.stdout || result.stderr || "Validate succeeded.", "info");
+				} else {
+					ctx.ui.notify(result.stderr || `Validate failed (exit ${result.code}).`, "error");
+				}
+			} finally {
+				ctx.ui.setStatus("mellea-skills", undefined);
+			}
+		},
+	});
+
+	pi.registerCommand("run", {
+		description: "Run a compiled Mellea skill pipeline against an input",
+		handler: async (args: string, ctx: ExtensionCommandContext) => {
+			const available = await checkCliAvailable(pi.exec);
+			if (!available) {
+				ctx.ui.notify(CLI_MISSING_MESSAGE, "error");
+				return;
+			}
+
+			const trimmed = args.trim();
+			if (!trimmed) {
+				ctx.ui.notify(
+					"Usage: /run <compiled-skill-dir> [--fixture ...] [--input ...] [--enforce] [--no-guardian] [--inference-engine ollama|vllm]",
+					"warning",
+				);
+				return;
+			}
+
+			const argv = trimmed.split(/\s+/);
+			ctx.ui.setStatus("mellea-skills", "Running...");
+			try {
+				const result = await runMelleaSkills(pi.exec, "run", argv);
+				if (result.code === 0) {
+					ctx.ui.notify(result.stdout || result.stderr || "Run succeeded.", "info");
+				} else {
+					ctx.ui.notify(result.stderr || `Run failed (exit ${result.code}).`, "error");
+				}
+			} finally {
+				ctx.ui.setStatus("mellea-skills", undefined);
+			}
+		},
+	});
 }
