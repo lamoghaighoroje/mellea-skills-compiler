@@ -22,7 +22,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			try {
 				const result = await runMelleaSkills(pi.exec, "compile", argv);
 				if (result.code === 0) {
-					ctx.ui.notify(result.stdout || "Compile succeeded.", "info");
+					ctx.ui.notify(result.stdout || result.stderr || "Compile succeeded.", "info");
 				} else {
 					ctx.ui.notify(result.stderr || `Compile failed (exit ${result.code}).`, "error");
 				}
@@ -55,7 +55,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			try {
 				const result = await runMelleaSkills(pi.exec, "certify", argv);
 				if (result.code === 0) {
-					ctx.ui.notify(result.stdout || "Certify succeeded.", "info");
+					ctx.ui.notify(result.stdout || result.stderr || "Certify succeeded.", "info");
 				} else {
 					ctx.ui.notify(result.stderr || `Certify failed (exit ${result.code}).`, "error");
 				}
