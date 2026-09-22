@@ -2,7 +2,7 @@ import type { ExtensionAPI, ExtensionCommandContext } from "@earendil-works/pi-c
 import { checkCliAvailable, runMelleaSkills, CLI_MISSING_MESSAGE } from "./lib/cli.js";
 
 export default function melleaSkillsExtension(pi: ExtensionAPI) {
-	pi.registerCommand("compile", {
+	pi.registerCommand("mellea-compile", {
 		description: "Compile a Mellea skill specification (.md) into a typed pipeline",
 		handler: async (args: string, ctx: ExtensionCommandContext) => {
 			const available = await checkCliAvailable(pi.exec);
@@ -13,7 +13,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 
 			const specPath = args.trim();
 			if (!specPath) {
-				ctx.ui.notify("Usage: /compile <path-to-spec.md> [--backend claude] [flags...]", "warning");
+				ctx.ui.notify("Usage: /mellea-compile <path-to-spec.md> [--backend claude] [flags...]", "warning");
 				return;
 			}
 
@@ -32,7 +32,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerCommand("certify", {
+	pi.registerCommand("mellea-certify", {
 		description: "Run the full certification pipeline on a compiled Mellea skill",
 		handler: async (args: string, ctx: ExtensionCommandContext) => {
 			const available = await checkCliAvailable(pi.exec);
@@ -44,7 +44,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			const trimmed = args.trim();
 			if (!trimmed) {
 				ctx.ui.notify(
-					"Usage: /certify <compiled-skill-dir> [--enforce] [--inference-engine ollama|vllm] [--risk-model ...] [--guardian-model ...]",
+					"Usage: /mellea-certify <compiled-skill-dir> [--enforce] [--inference-engine ollama|vllm] [--risk-model ...] [--guardian-model ...]",
 					"warning",
 				);
 				return;
@@ -65,7 +65,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerCommand("validate", {
+	pi.registerCommand("mellea-validate", {
 		description: "Validate a compiled Mellea skill (lints + fixture smoke-check)",
 		handler: async (args: string, ctx: ExtensionCommandContext) => {
 			const available = await checkCliAvailable(pi.exec);
@@ -77,7 +77,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			const trimmed = args.trim();
 			if (!trimmed) {
 				ctx.ui.notify(
-					"Usage: /validate <compiled-skill-dir> [--no-run] [--all]",
+					"Usage: /mellea-validate <compiled-skill-dir> [--no-run] [--all]",
 					"warning",
 				);
 				return;
@@ -98,7 +98,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerCommand("run", {
+	pi.registerCommand("mellea-run", {
 		description: "Run a compiled Mellea skill pipeline against an input",
 		handler: async (args: string, ctx: ExtensionCommandContext) => {
 			const available = await checkCliAvailable(pi.exec);
@@ -110,7 +110,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 			const trimmed = args.trim();
 			if (!trimmed) {
 				ctx.ui.notify(
-					"Usage: /run <compiled-skill-dir> [--fixture ...] [--input ...] [--enforce] [--no-guardian] [--inference-engine ollama|vllm]",
+					"Usage: /mellea-run <compiled-skill-dir> [--fixture ...] [--input ...] [--enforce] [--no-guardian] [--inference-engine ollama|vllm]",
 					"warning",
 				);
 				return;
