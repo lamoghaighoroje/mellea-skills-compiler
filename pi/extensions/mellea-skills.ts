@@ -1,5 +1,5 @@
 import type { ExtensionAPI, ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
-import { checkCliAvailable, runMelleaSkills, CLI_MISSING_MESSAGE } from "./lib/cli.js";
+import { checkCliAvailable, runMelleaSkills, tokenizeArgs, CLI_MISSING_MESSAGE } from "./lib/cli.js";
 
 export default function melleaSkillsExtension(pi: ExtensionAPI) {
 	pi.registerCommand("mellea-compile", {
@@ -17,7 +17,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 				return;
 			}
 
-			const argv = specPath.split(/\s+/);
+			const argv = tokenizeArgs(specPath);
 			ctx.ui.setStatus("mellea-skills", "Compiling...");
 			try {
 				const result = await runMelleaSkills(pi.exec, "compile", argv);
@@ -50,7 +50,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 				return;
 			}
 
-			const argv = trimmed.split(/\s+/);
+			const argv = tokenizeArgs(trimmed);
 			ctx.ui.setStatus("mellea-skills", "Certifying...");
 			try {
 				const result = await runMelleaSkills(pi.exec, "certify", argv);
@@ -83,7 +83,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 				return;
 			}
 
-			const argv = trimmed.split(/\s+/);
+			const argv = tokenizeArgs(trimmed);
 			ctx.ui.setStatus("mellea-skills", "Validating...");
 			try {
 				const result = await runMelleaSkills(pi.exec, "validate", argv);
@@ -116,7 +116,7 @@ export default function melleaSkillsExtension(pi: ExtensionAPI) {
 				return;
 			}
 
-			const argv = trimmed.split(/\s+/);
+			const argv = tokenizeArgs(trimmed);
 			ctx.ui.setStatus("mellea-skills", "Running...");
 			try {
 				const result = await runMelleaSkills(pi.exec, "run", argv);

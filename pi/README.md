@@ -52,6 +52,17 @@ extensions or with pi's own built-in commands (pi ships a built-in `/export`,
 for example — a generic name like `/run` or `/export` is exactly the kind of
 name another package could plausibly also claim).
 
+A flag value containing spaces can be quoted with `"..."` or `'...'`, e.g.:
+
+```
+/mellea-run <compiled-skill-dir> --input "What's the weather like in Dublin?"
+```
+
+This is a minimal quote-aware split (no backslash escapes, no nested
+quotes) — not a full shell parser — but it's enough for the common case of
+a natural-language `--input` value or a `--input '{"json": "value"}'`
+payload.
+
 ## Known limitations
 
 - No auto-install: missing `mellea-skills`, Claude Code, or an inference
